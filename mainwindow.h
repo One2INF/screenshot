@@ -20,6 +20,9 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+Q_SIGNALS:
+    void signalCompleteCature(QPixmap catureImage);
+
 private:
     void loadBackgroundPixmap();
 

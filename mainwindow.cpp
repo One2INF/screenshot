@@ -2,6 +2,8 @@
 #include <QMouseEvent>
 #include <QDesktopWidget>
 #include <QApplication>
+#include <QDateTime>
+#include <QDesktopServices>
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent),
@@ -93,6 +95,19 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Escape)
     {
+        close();
+    }
+
+    if (event->key() == Qt::Key_Return ||
+        event->key() == Qt::Key_Enter)
+    {
+        QDateTime time = QDateTime::currentDateTime();
+        QString str = time.toString("yyyyMMddhhmmss");
+
+        QString savePath = QStandardPaths::standardLocations(QStandardPaths::DesktopLocation).first();
+
+        m_capturePixmap.save(savePath + "/Screen" + str + ".png");
+
         close();
     }
 }
