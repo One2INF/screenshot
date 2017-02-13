@@ -4,6 +4,14 @@
 #include <QWidget>
 #include <QPainter>
 
+enum CaptureState
+{
+    initCapture,
+    beginCaptureImage,
+    finishCaptureImage,
+    beginMoveCaptureArea,
+    finishMoveCaptureArea,
+};
 class MainWindow : public QWidget
 {
     Q_OBJECT
@@ -22,19 +30,33 @@ private:
     void paintEvent(QPaintEvent *event);
 
     QRect getRect(const QPoint &beginPoint, const QPoint &endPoint);
+    bool isPressPointInSelectRect(QPoint mousePressPoint);
+
+    QRect getSelectRect();
+    void drawCaptureImage();
+
+    QRect getMoveRect();
+    QPoint getMovePoint();
+
 
 private:
+    QPainter m_painter;
+
     int m_screenwidth;
     int m_screenheight;
 
     bool m_isMousePress;
+
     QPoint m_beginPoint;
     QPoint m_endPoint;
+    QPoint m_beginMovePoint;
+    QPoint m_endMovePoint;
 
     QPixmap m_loadPixmap;
     QPixmap m_capturePixmap;
 
-
+    CaptureState m_currentCaptureState;
+    QRect m_currentSelectRect;
 };
 
 #endif // MAINWINDOW_H
