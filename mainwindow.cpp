@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <QDesktopServices>
 #include <QDebug>
+#include <QClipboard>
 
 // 选中矩形8个拖拽点小矩形的宽高;
 #define STRETCH_RECT_WIDTH 6
@@ -267,6 +268,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
         m_capturePixmap.save(savePath + "/Screen" + str + ".png");
 
+        QClipboard *clipboard = QApplication::clipboard();
+        clipboard->setImage(m_capturePixmap.toImage());
+    
         close();
     }
 }
